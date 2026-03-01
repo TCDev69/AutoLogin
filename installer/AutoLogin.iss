@@ -3,7 +3,7 @@
 #endif
 
 #ifndef PublishDir
-  #define PublishDir AddBackslash(SourcePath) + "publish"
+  #define PublishDir AddBackslash(SourcePath) + "..\\publish"
 #endif
 
 #define MyAppName "AutoLogin"
@@ -27,9 +27,9 @@ Compression=lzma2
 SolidCompression=yes
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-OutputDir={#SourcePath}dist
+OutputDir={#SourcePath}..\dist
 OutputBaseFilename=AutoLogin-Setup-{#MyAppVersion}
-SetupIconFile={#SourcePath}icon.ico
+SetupIconFile={#SourcePath}..\icon.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
 WizardStyle=modern
 PrivilegesRequired=lowest
