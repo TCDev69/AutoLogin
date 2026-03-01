@@ -2,8 +2,20 @@
   #define MyAppVersion "1.0.0"
 #endif
 
+#ifndef TargetArch
+  #define TargetArch "x64"
+#endif
+
 #ifndef PublishDir
   #define PublishDir AddBackslash(SourcePath) + "..\\publish"
+#endif
+
+#if TargetArch == "arm64"
+  #define ArchitecturesAllowedValue "arm64"
+  #define ArchitecturesInstallModeValue "arm64"
+#else
+  #define ArchitecturesAllowedValue "x64"
+  #define ArchitecturesInstallModeValue "x64"
 #endif
 
 #define MyAppName "AutoLogin"
@@ -25,10 +37,10 @@ DisableProgramGroupPage=no
 DisableDirPage=no
 Compression=lzma2
 SolidCompression=yes
-ArchitecturesAllowed=x64
-ArchitecturesInstallIn64BitMode=x64
+ArchitecturesAllowed={#ArchitecturesAllowedValue}
+ArchitecturesInstallIn64BitMode={#ArchitecturesInstallModeValue}
 OutputDir={#SourcePath}..\dist
-OutputBaseFilename=AutoLogin-Setup-{#MyAppVersion}
+OutputBaseFilename=AutoLogin-Setup-{#MyAppVersion}-{#TargetArch}
 SetupIconFile={#SourcePath}..\icon.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
 WizardStyle=modern

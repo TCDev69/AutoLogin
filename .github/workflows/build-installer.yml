@@ -8,6 +8,10 @@ on:
 jobs:
   windows-installer:
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [x64, arm64]
 
     steps:
       - name: Checkout
@@ -21,8 +25,8 @@ jobs:
       - name: Restore
         run: dotnet restore AutoLogin.csproj
 
-      - name: Publish win-x64
-        run: dotnet publish AutoLogin.csproj -c Release -r win-x64 --self-contained true -p:WindowsAppSDKSelfContained=true -o publish
+      - name: Publish win-${{ matrix.arch }}
+        run: dotnet publish AutoLogin.csproj -c Release -r win-${{ matrix.arch }} --self-contained true -p:WindowsAppSDKSelfContained=true -o publish\${{ matrix.arch }}
 
       - name: Install Inno Setup
         run: choco install innosetup --no-progress -y
@@ -34,10 +38,14 @@ jobs:
           if (!(Test-Path $iscc)) {
             throw "ISCC.exe not found at $iscc"
           }
-          & $iscc "/DMyAppVersion=1.0.${{ github.run_number }}" "/DPublishDir=$PWD\publish" "installer\AutoLogin.iss"
+          $publishDir = "$PWD\publish\${{ matrix.arch }}"
+          if (!(Test-Path $publishDir)) {
+            throw "Publish directory not found: $publishDir"
+          }
+          & $iscc "/DMyAppVersion=1.0.${{ github.run_number }}" "/DTargetArch=${{ matrix.arch }}" "/DPublishDir=$publishDir" "installer\AutoLogin.iss"
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@v4
         with:
-          name: AutoLogin-Installer
-          path: dist\*.exe
+          name: AutoLogin-Installer-${{ matrix.arch }}
+          path: dist\*-${{ matrix.arch }}.exe
