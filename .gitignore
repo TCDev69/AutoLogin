@@ -1,0 +1,48 @@
+# Build outputs
+bin/
+obj/
+out/
+
+# Publish / installer outputs
+publish/
+dist/
+
+# .NET user/local files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+*.cache
+*.pdb
+
+# Logs
+*.log
+logs/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Rider / ReSharper
+.idea/
+_ReSharper*/
+*.DotSettings.user
+
+# Visual Studio
+.vs/
+
+# VS Code
+.vscode/
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# Temporary
+*.tmp
+*.temp
+
+# Inno Setup compiler outputs (if generated outside dist)
+*.iss.bak
