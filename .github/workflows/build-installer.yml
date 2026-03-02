@@ -45,7 +45,7 @@ jobs:
           & $iscc "/DMyAppVersion=1.0.${{ github.run_number }}" "/DTargetArch=${{ matrix.arch }}" "/DPublishDir=$publishDir" "installer\AutoLogin.iss"
 
       - name: Upload installer artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: AutoLogin-Installer-${{ matrix.arch }}
           path: dist\*-${{ matrix.arch }}.exe
